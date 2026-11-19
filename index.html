@@ -1,613 +1,102 @@
-<index. html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Traders Profile</title>
+  <title>M-Pesa STK Push Simulator</title>
   <style>
-    :root {
-      --bg-dark: #0d1117;
-      --bg-card: #161b22;
-      --bg-input: #0d1117;
-      --border: #30363d;
-      --text-main: #e6edf3;
-      --text-muted: #8b949e;
-      --accent-blue: #2f81f7;
-      --mpesa-green: #43b02a;
-      --mpesa-green-hover: #369221;
-      --danger: #f85149;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
-    }
-
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      padding: 24px;
-      line-height: 1.5;
-    }
-
-    .container {
-      max-width: 1050px;
-      margin: 0 auto;
-    }
-
-    /* Header */
-    header {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 24px;
+      min-height: 100vh;
+      margin: 0;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand h1 {
-      font-size: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-
-    .badge-verified {
-      background: rgba(67, 176, 42, 0.15);
-      color: var(--mpesa-green);
-      border: 1px solid rgba(67, 176, 42, 0.4);
-      font-size: 0.75rem;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-weight: 600;
-    }
-
-    /* Grid Layout */
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 24px;
-    }
-
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
     .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 22px;
-      margin-bottom: 24px;
-    }
-
-    .card h2 {
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* Profile Details */
-    .profile-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #1f6feb, #43b02a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #fff;
-    }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.92rem;
-    }
-
-    .stat-row:last-child {
-      border-bottom: none;
-    }
-
-    .stat-label {
-      color: var(--text-muted);
-    }
-
-    .stat-val {
-      font-weight: 600;
-    }
-
-    /* Balance Box */
-    .balance-box {
-      background: #0d1117;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .balance-amount {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--mpesa-green);
-    }
-
-    /* Forms & Inputs */
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .phone-input-wrap {
-      display: flex;
-      align-items: center;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .prefix {
-      padding: 10px 12px;
-      background: #21262d;
-      color: var(--text-muted);
-      font-weight: 600;
-      font-size: 0.9rem;
-      border-right: 1px solid var(--border);
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px 12px;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-main);
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    .phone-input-wrap input {
-      border: none;
-    }
-
-    input:focus {
-      border-color: var(--mpesa-green);
-    }
-
-    /* Buttons */
-    .btn {
-      width: 100%;
-      padding: 11px;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-mpesa {
-      background: var(--mpesa-green);
-      color: #fff;
-    }
-
-    .btn-mpesa:hover {
-      background: var(--mpesa-green-hover);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 6px 12px;
-      font-size: 0.8rem;
-      width: auto;
-    }
-
-    .btn-outline:hover {
-      border-color: var(--danger);
-      color: var(--danger);
-    }
-
-    /* Saved M-Pesa Card */
-    .saved-method {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(67, 176, 42, 0.08);
-      border: 1px solid rgba(67, 176, 42, 0.35);
-      padding: 14px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-
-    .mpesa-logo {
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      color: var(--mpesa-green);
-      font-size: 1rem;
-    }
-
-    /* Table */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 10px 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    th {
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    /* Modal / STK Push Overlay */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-
-    .modal {
-      background: var(--bg-card);
-      border: 1px solid var(--mpesa-green);
-      border-radius: 10px;
+      background: #ffffff;
       padding: 24px;
-      width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      width: 100%;
       max-width: 380px;
-      text-align: center;
     }
-
-    .spinner {
-      width: 36px;
-      height: 36px;
-      border: 4px solid rgba(67, 176, 42, 0.2);
-      border-top-color: var(--mpesa-green);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 16px auto;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .msg-error {
-      color: var(--danger);
-      font-size: 0.82rem;
+    h2 { margin-top: 0; color: #1b5e20; }
+    label { display: block; margin-top: 12px; font-weight: bold; font-size: 14px; }
+    input {
+      width: 100%;
+      padding: 10px;
       margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover { background: #1b5e20; }
+    .status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #eef7ee;
+      color: #1b5e20;
+      font-size: 14px;
       display: none;
     }
   </style>
 </head>
 <body>
-  <!-- Prompt Banner -->
-  <div id="topPrompt" style="display: flex; align-items: center; justify-content: space-between; background: #21262d; color: #e6edf3; border: 1px solid #2f81f7; border-radius: 8px; padding: 14px 20px; margin-bottom: 22px; font-size: 1rem;">
-    <span>
-      <strong>Tip:</strong> For instant deposits, ensure your M-Pesa number is registered in your name and is active.
-    </span>
-    <button onclick="document.getElementById('topPrompt').style.display='none'" style="background: none; border: none; color: #8b949e; font-size: 1.2rem; cursor: pointer; margin-left: 18px;">&times;</button>
-  </div>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <h1>TRADERS PROFILE</h1>
-        <span class="badge-verified">KYC Verified</span>
-      </div>
-      <div style="font-size: 0.85rem; color: var(--text-muted);">
-        Account ID: <strong>#TRD-884920</strong>
-      </div>
-    </header>
+  <div class="card">
+    <h2>M-Pesa Push Simulation</h2>
+    <form id="mpesaForm">
+      <label for="phone">Phone Number (2547...)</label>
+      <input id="phone" type="tel" placeholder="254712345678" required />
 
-    <div class="grid">
-      <!-- LEFT COLUMN: Trader Info -->
-      <div>
-        <div class="card">
-          <h2>Trader Overview</h2>
-          <div class="profile-header">
-            <div class="avatar" id="avatarInitials">JM</div>
-            <div>
-              <h3 id="displayTraderName">John Mwangi</h3>
-              <p style="color: var(--text-muted); font-size: 0.88rem;">Multi-Asset & FX Account</p>
-            </div>
-          </div>
+      <label for="amount">Amount (KES)</label>
+      <input id="amount" type="number" min="1" placeholder="100" required />
 
-          <div class="stat-row">
-            <span class="stat-label">Account Tier</span>
-            <span class="stat-val">Pro Raw Spread</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Base Currency</span>
-            <span class="stat-val">KES (Kenyan Shilling)</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Leverage</span>
-            <span class="stat-val">1:500</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Primary Funding</span>
-            <span class="stat-val" style="color: var(--mpesa-green);">M-Pesa Express</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Edit Trader Name</h2>
-          <div class="form-group">
-            <label for="traderNameInput">Full Legal Name (Must match M-Pesa registration)</label>
-            <input type="text" id="traderNameInput" value="John Mwangi" />
-          </div>
-          <button class="btn btn-mpesa" onclick="updateProfileName()">Save Profile Details</button>
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN: Payment Methods & Wallet -->
-      <div>
-        <div class="card">
-          <h2>
-            <span>Payment Methods</span>
-            <span class="mpesa-logo">M-PESA</span>
-          </h2>
-
-          <div class="balance-box">
-            <div>
-              <div style="font-size: 0.8rem; color: var(--text-muted);">Available Trading Equity</div>
-              <div class="balance-amount" id="walletBalance">KES 25,000.00</div>
-            </div>
-            <span class="badge-verified">Instant Deposit</span>
-          </div>
-
-          <!-- Active Saved M-Pesa Container -->
-          <div id="savedMethodContainer" style="display: none;">
-            <div class="saved-method">
-              <div>
-                <div class="mpesa-logo">M-PESA Mobile Money</div>
-                <div style="font-size: 0.9rem; margin-top: 2px;" id="savedPhoneText">+254 712 345 678</div>
-                <div style="font-size: 0.78rem; color: var(--text-muted);" id="savedHolderText">Registered: John Mwangi</div>
-              </div>
-              <button class="btn btn-outline" onclick="removePaymentMethod()">Remove</button>
-            </div>
-
-            <!-- Deposit Trigger -->
-            <div class="form-group">
-              <label for="depositAmount">Quick Deposit Amount (KES)</label>
-              <input type="number" id="depositAmount" placeholder="e.g. 5000" min="100" />
-            </div>
-            <button class="btn btn-mpesa" onclick="initiateStkPush()">Deposit via M-Pesa STK Push</button>
-          </div>
-
-          <!-- Add New M-Pesa Form -->
-          <form id="addMpesaForm" onsubmit="saveMpesaMethod(event)">
-            <div class="form-group">
-              <label for="mpesaNumber">Safaricom M-Pesa Phone Number</label>
-              <div class="phone-input-wrap">
-                <span class="prefix">+254</span>
-                <input type="tel" id="mpesaNumber" placeholder="720671340" maxlength="9" required />
-              </div>
-              <div class="msg-error" id="phoneError">Enter a valid 9-digit Safaricom number (starting with 7 or 1).</div>
-            </div>
-
-            <div class="form-group">
-              <label for="accountLabel">Account Alias (Optional)</label>
-              <input type="text" id="accountLabel" placeholder="e.g. Primary Trading Line" />
-            </div>
-
-            <button type="submit" class="btn btn-mpesa">+ Add M-Pesa Payment Method</button>
-          </form>
-        </div>
-
-        <!-- Transaction Log -->
-        <div class="card">
-          <h2>Recent M-Pesa Ledger</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Receipt</th>
-                <th>Phone</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="txHistory">
-              <tr>
-                <td>SJK892LP10</td>
-                <td>+254 712***678</td>
-                <td>KES 25,000</td>
-                <td style="color: var(--mpesa-green);">Completed</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STK Push Simulation Modal -->
-  <div class="modal-backdrop" id="stkModal">
-    <div class="modal">
-      <div class="mpesa-logo" style="font-size: 1.3rem;">M-PESA EXPRESS</div>
-      <div class="spinner" id="stkSpinner"></div>
-      <p id="stkMessage" style="margin: 12px 0; font-size: 0.95rem;">
-        Sending STK Push prompt to your phone...
-      </p>
-      <p style="font-size: 0.8rem; color: var(--text-muted);" id="stkSubtext">
-        Please enter your M-Pesa PIN on your handset to authorize the transaction.
-      </p>
-    </div>
+      <button type="submit">Send STK Push (Simulated)</button>
+    </form>
+    <div id="statusBox" class="status"></div>
   </div>
 
   <script>
-    let currentBalance = 25000;
-    let savedPhone = "";
+    const form = document.getElementById("mpesaForm");
+    const statusBox = document.getElementById("statusBox");
 
-    // Load saved data from Chrome localStorage if available
-    window.onload = function () {
-      const storedPhone = localStorage.getItem("trader_mpesa_phone");
-      const storedName = localStorage.getItem("trader_name");
-      const storedBal = localStorage.getItem("trader_balance");
-
-      if (storedName) {
-        document.getElementById("displayTraderName").innerText = storedName;
-        document.getElementById("traderNameInput").value = storedName;
-        updateInitials(storedName);
-      }
-
-      if (storedBal) {
-        currentBalance = parseFloat(storedBal);
-        renderBalance();
-      }
-
-      if (storedPhone) {
-        savedPhone = storedPhone;
-        showSavedMethod(storedPhone);
-      }
-    };
-
-    function updateInitials(name) {
-      const parts = name.trim().split(" ");
-      const initials = parts.length > 1
-        ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-        : name.substring(0, 2).toUpperCase();
-      document.getElementById("avatarInitials").innerText = initials;
-    }
-
-    function updateProfileName() {
-      const newName = document.getElementById("traderNameInput").value.trim();
-      if (!newName) return;
-      document.getElementById("displayTraderName").innerText = newName;
-      document.getElementById("savedHolderText").innerText = "Registered: " + newName;
-      updateInitials(newName);
-      localStorage.setItem("trader_name", newName);
-    }
-
-    function saveMpesaMethod(e) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
-      const rawInput = document.getElementById("mpesaNumber").value.trim().replace(/\s+/g, "");
-      const errorEl = document.getElementById("phoneError");
+      const phone = document.getElementById("phone").value.trim();
+      const amount = document.getElementById("amount").value.trim();
 
-      // Validate Kenyan 9-digit suffix (7XX XXX XXX or 1XX XXX XXX)
-      if (!/^(7|1)\d{8}$/.test(rawInput)) {
-        errorEl.style.display = "block";
-        return;
-      }
+      statusBox.style.display = "block";
+      statusBox.style.background = "#fff8e1";
+      statusBox.style.color = "#8d6e00";
+      statusBox.innerHTML =
+        `<strong>STK Push Sent (Simulated)</strong><br>` +
+        `Prompting <b>${phone}</b> for <b>KES ${amount}</b>... Enter M-Pesa PIN on handset.`;
 
-      errorEl.style.display = "none";
-      savedPhone = "+254 " + rawInput.slice(0, 3) + " " + rawInput.slice(3, 6) + " " + rawInput.slice(6);
-      localStorage.setItem("trader_mpesa_phone", savedPhone);
-      showSavedMethod(savedPhone);
-    }
-
-    function showSavedMethod(formattedPhone) {
-      document.getElementById("addMpesaForm").style.display = "none";
-      document.getElementById("savedMethodContainer").style.display = "block";
-      document.getElementById("savedPhoneText").innerText = formattedPhone;
-      document.getElementById("savedHolderText").innerText =
-        "Registered: " + document.getElementById("displayTraderName").innerText;
-    }
-
-    function removePaymentMethod() {
-      localStorage.removeItem("trader_mpesa_phone");
-      savedPhone = "";
-      document.getElementById("mpesaNumber").value = "";
-      document.getElementById("savedMethodContainer").style.display = "none";
-      document.getElementById("addMpesaForm").style.display = "block";
-    }
-
-    function renderBalance() {
-      document.getElementById("walletBalance").innerText =
-        "KES " + currentBalance.toLocaleString("en-KE", { minimumFractionDigits: 2 });
-    }
-
-    function initiateStkPush() {
-      const amountVal = parseFloat(document.getElementById("depositAmount").value);
-      if (isNaN(amountVal) || amountVal < 100) {
-        alert("Please enter a valid deposit amount of at least KES 100.");
-        return;
-      }
-
-      const modal = document.getElementById("stkModal");
-      const msg = document.getElementById("stkMessage");
-      const sub = document.getElementById("stkSubtext");
-      const spinner = document.getElementById("stkSpinner");
-
-      modal.style.display = "flex";
-      spinner.style.display = "block";
-      msg.innerText = `STK Push sent to ${savedPhone} for KES ${amountVal.toLocaleString()}...`;
-      sub.innerText = "Check your phone screen and enter your M-Pesa PIN.";
-
-      // Simulate Daraja API callback confirmation after 3 seconds
       setTimeout(() => {
-        spinner.style.display = "none";
-        msg.innerHTML = `<span style="color: #43b02a; font-weight: bold;">Payment Confirmed!</span>`;
-        sub.innerText = `KES ${amountVal.toLocaleString()} credited to your trading wallet.`;
-
-        currentBalance += amountVal;
-        localStorage.setItem("trader_balance", currentBalance);
-        renderBalance();
-        addTransactionRow(savedPhone, amountVal);
-        document.getElementById("depositAmount").value = "";
-
-        setTimeout(() => {
-          modal.style.display = "none";
-        }, 1800);
-      }, 3000);
-    }
-
-    function addTransactionRow(phone, amount) {
-      const tbody = document.getElementById("txHistory");
-      const receipt = "TL" + Math.random().toString(36).substring(2, 9).toUpperCase();
-      const maskedPhone = phone.slice(0, 8) + "***" + phone.slice(-3);
-
-      const row = `
-        <tr>
-          <td>${receipt}</td>
-          <td>${maskedPhone}</td>
-          <td>KES ${amount.toLocaleString()}</td>
-          <td style="color: var(--mpesa-green);">Completed</td>
-        </tr>
-      `;
-      tbody.insertAdjacentHTML("afterbegin", row);
-    }
+        const receipt = "SIM" + Math.random().toString(36).substring(2, 8).toUpperCase();
+        statusBox.style.background = "#eef7ee";
+        statusBox.style.color = "#1b5e20";
+        statusBox.innerHTML =
+          `<strong>Payment Confirmed (Simulated)</strong><br>` +
+          `Receipt: <b>${receipt}</b><br>` +
+          `KES ${amount} from ${phone}.<br>` +
+          `<small>Note: Front-end simulation only; no real Daraja STK push sent.</small>`;
+      }, 2500);
+    });
   </script>
 </body>
 </html>
